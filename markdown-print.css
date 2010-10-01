@@ -1,0 +1,70 @@
+/* Default "Display Markdown" style */
+
+body, p, li, div, h1, h2, h3, h4, h5, h6, td {
+  color: #000000;
+  font-family: "Liberation Sans", "Helvetica Neue", Calibri, sans-serif;
+}
+code {
+  font-family: "Liberation Mono", Consolas, monospace;
+  font-weight: bold;
+}
+pre {
+  background: #FFFFFF;
+  border: 1px solid #B8C0C4;
+  padding: 4px 8px 4px 8px;
+  margin: 0px 1em;
+  max-width: 56em;
+  white-space: pre-wrap;
+  font-family: "Liberation Mono", Consolas, monospace;
+  font-weight: normal;
+  color: #474747;
+}
+pre code {
+  font-family: "Liberation Mono", Consolas, monospace;
+  font-weight: normal;
+  color: #474747;
+}
+dd {
+  margin-bottom: 1em;
+}
+dd p {
+  margin-top: 0px;
+}
+dd pre {
+  margin: 1em 0px;
+}
+blockquote {
+  border-left: 3px solid #B6B6B6;
+  margin: 1em;
+  padding-left: 1em;
+}
+a {
+  text-decoration: none;
+  color: #600000;
+}
+/* fix for space in list items containing <pre> */
+li p {
+  margin-top: 0px;
+}
+li pre {
+  margin-bottom: 1em;
+}
+td, th {
+  padding: 0.1em 1em;
+}
+/* Don't print these things */
+.controls {
+  display: none;
+}
+#hideButton {
+  display: none;
+}
+#showButton {
+  display: none;
+}
+#TOC {
+  display: none;
+}
+#bigfoot {
+  display: none;
+}

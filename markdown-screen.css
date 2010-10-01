@@ -1,0 +1,81 @@
+/* Default "Display Markdown" style */
+
+body, p, li, div, h1, h2, h3, h4, h5, h6, th, td {
+  color: #4C4C4C;
+  font-family: "Liberation Sans", "Helvetica Neue", Calibri, sans-serif;
+}
+body {
+  margin: 1em 8em;
+}
+code {
+  font-family: "Liberation Mono", Consolas, monospace;
+  font-weight: bold;
+}
+pre {
+  background: #292929;
+  border: 3px solid #B8C0C4;
+  padding: 4px 8px 4px 8px;
+  margin: 0px 1em;
+  max-width: 56em;
+  white-space: pre-wrap;
+  font-family: "Liberation Mono", Consolas, monospace;
+  font-weight: normal;
+  color: #E1EBE2;
+}
+pre code {
+  font-family: "Liberation Mono", Consolas, monospace;
+  font-weight: normal;
+  color: #E1EBE2;
+}
+dd {
+  margin-bottom: 1em;
+}
+dt {
+  font-style: italic;
+}
+dd p {
+  margin-top: 0px;
+}
+dd pre {
+  margin: 1em 0px;
+}
+blockquote {
+  border-left: 3px solid #B6B6B6;
+  margin: 1em;
+  padding-left: 1em;
+}
+a {
+  text-decoration: none;
+  color: #600000;
+}
+/* fix for space in list items containing <pre> */
+li p {
+  margin-top: 0px;
+}
+li pre {
+  margin-bottom: 1em;
+}
+td, th {
+  padding: 0.1em 1em;
+}
+/* Table of Contents */
+.controls {
+  font-size: smaller;
+  color: #CDCDCD;
+  cursor: pointer;
+}
+.controls a {
+  color: #CDCDCD;
+}
+#TOC li {
+  padding: 2px 0px 0px 0px;
+  list-style-type: none;
+}
+#TOC ul {
+  margin: 0px;
+  padding: 0px 0px 0px 1.5em;
+}
+/* Big (Empty) Footer */
+#bigfoot {
+  height: 600px;
+}
