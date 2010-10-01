@@ -3,6 +3,8 @@
 /*
     To display a Markdown file as HTML, use mod_rewrite to call this script
     when the file is requested.
+    
+    By Rob McBroom, 2010
 */
 
 $requested = rawurldecode( $_SERVER['REQUEST_URI'] );
