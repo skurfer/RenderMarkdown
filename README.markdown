@@ -54,3 +54,14 @@ And of course we should all thank [Gruber][df] and Michel Fortin for their work.
 [phpsp]: http://michelf.com/projects/php-smartypants/
 [toc]:   http://www.webdesignlessons.com/creating-a-table-of-contents-generator-in-php/
 [df]:    http://daringfireball.net/
+
+## Future Features ##
+
+I've considered adding the following features, but I don't personally have a need for them at the moment. If even one person requests one of these, I'll probably add it.
+
+  * An INI file to control behavior
+  * Specify a file to include before the main body
+  * Specify a file to include after the main body
+  * An option to display the source file's last modified time (top, bottom, none)
+  * An option to turn off the Table of Contents
+  * An option to turn off the link to the original text
