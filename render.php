@@ -93,7 +93,7 @@ function table_of_contents($html) {
   $raw_indent_level = 0;
   $anchor_history = array();
   foreach ($matches as $val) {
-    html_comment( $val );
+    # html_comment( $val );
     ++$list_index;
     $prev_indent_level = $indent_level;
     $indent_level = $val[2];
@@ -143,9 +143,9 @@ function table_of_contents($html) {
 
 function safe_parameter( $unsafe ) {
   
-  /* change a string into something that can be safely used as a paramter
+  /* change a string into something that can be safely used as a parameter
   in a URL. Example: "Rob is a PHP Genius" would become "rob_is_a_php_genius" */
-
+  
   // remove all but alphanumerics, spaces and underscores
   $lowAN = preg_replace( "/[^-a-z0-9_ ]/", "", strtolower( $unsafe ) );
   // replace spaces/underscores with underscores
