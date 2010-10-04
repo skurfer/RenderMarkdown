@@ -5,8 +5,6 @@
     when the file is requested.
     
     By Rob McBroom, 2010
-    
-    TODO return a proper 404 for missing files
 */
 
 $requested = rawurldecode( $_SERVER['REQUEST_URI'] );
@@ -99,7 +97,19 @@ HTML;
 HTML;
   }
 } else {
-  echo "<p>I couldn't find anything under that name. Sorry.</p>\n";
+  // the requested file doesn't exist
+  header( "HTTP/1.1 404 Not Found" );
+  header( "Content-type: text/html" );
+  echo <<<HTML
+<html>
+<head>
+  <title>404 Not Found</title>
+</head>
+<body>
+<p>I couldn't find anything under that name. Sorry.</p>
+</body>
+</html>
+HTML;
 }
 
 function table_of_contents( $html ) {
