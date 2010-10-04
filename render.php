@@ -6,8 +6,6 @@
     
     By Rob McBroom, 2010
     
-    TODO add INI file for settings
-    TODO use first header as title
     TODO return a proper 404 for missing files
 */
 
