@@ -5,6 +5,8 @@
     when the file is requested.
     
     By Rob McBroom, 2010
+    
+    TODO allow ToC to be displayed by default
 */
 
 $requested = rawurldecode( $_SERVER['REQUEST_URI'] );
@@ -50,6 +52,13 @@ if ( file_exists( $md_source ) ) {
     }
     if ( $settings['toc'] ) {
       $html = table_of_contents( $html );
+      if ( $settings['toc_hidden'] ) {
+        $toc_display = ' onLoad="hideStuff();"';
+      } else {
+        $toc_display = ' onLoad="showStuff();"';
+      }
+    } else {
+      $toc_display = "";
     }
     $title = "Viewing Markdown file ($requested_file) as HTML";
     if ( $settings['title_from_heading'] ) {
@@ -77,7 +86,7 @@ if ( file_exists( $md_source ) ) {
     }
   </script>
 </head>
-<body onLoad="hideStuff();">
+<body${toc_display}>
 
 HTML;
     if ( $settings['text_version'] ) {
