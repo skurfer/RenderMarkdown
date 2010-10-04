@@ -5,14 +5,13 @@
     when the file is requested.
     
     By Rob McBroom, 2010
-    
-    TODO allow ToC to be displayed by default
 */
 
+$settings = parse_ini_file( "render.ini" );
 $requested = rawurldecode( $_SERVER['REQUEST_URI'] );
 $request_parts = explode( '.', $requested );
-if ( array_pop( $request_parts ) == "text" ) {
-  // replace the requested name with '.text' removed
+if ( array_pop( $request_parts ) == $settings['text_extension'] ) {
+  // replace the requested name with extension removed
   $requested = implode( '.', $request_parts );
   $show_text = true;
 } else {
@@ -35,13 +34,12 @@ $md_source = $_SERVER['DOCUMENT_ROOT'] . $requested;
 $ht_path = dirname( $_SERVER['SCRIPT_NAME'] );
 
 if ( file_exists( $md_source ) ) {
-  // if file name ended with ".text", show the original Markdown
+  // if file name ended with text_extension, show the original Markdown
   if ( $show_text ) {
     header( "Content-type: text/plain" );
     readfile( $md_source );
   } else {
     // Publish/Display the text as HTML
-    $settings = parse_ini_file( "render.ini" );
     // convert to Markdown
     include_once( "markdown.php" );
     $html = Markdown( file_get_contents( $md_source ) );
@@ -90,7 +88,8 @@ if ( file_exists( $md_source ) ) {
 
 HTML;
     if ( $settings['text_version'] ) {
-      echo '<div class="controls" style="float: right"><a href="' . $requested_file . '.text">View Original Text</a></div>' . "\n";
+      $text_href = "${requested_file}.${settings['text_extension']}";
+      echo '<div class="controls" style="float: right"><a href="' . $text_href . '">View Original Text</a></div>' . "\n";
     }
     echo $html;
     echo <<<HTML
