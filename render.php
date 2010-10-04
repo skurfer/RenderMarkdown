@@ -5,6 +5,10 @@
     when the file is requested.
     
     By Rob McBroom, 2010
+    
+    TODO add INI file for settings
+    TODO use first header as title
+    TODO return a proper 404 for missing files
 */
 
 $requested = rawurldecode( $_SERVER['REQUEST_URI'] );
@@ -39,16 +43,29 @@ if ( file_exists( $md_source ) ) {
     readfile( $md_source );
   } else {
     // Publish/Display the text as HTML
+    $settings = parse_ini_file( "render.ini" );
+    // convert to Markdown
     include_once( "markdown.php" );
-    include_once( "smartypants.php" );
-    
+    $html = Markdown( file_get_contents( $md_source ) );
+    // apply SmartyPants
+    if ( $settings['smartypants'] ) {
+      include_once( "smartypants.php" );
+      $html = SmartyPants( $html );
+    }
+    if ( $settings['toc'] ) {
+      $html = table_of_contents( $html );
+    }
+    $title = "Viewing Markdown file ($requested_file) as HTML";
+    if ( $settings['title_from_heading'] ) {
+      $title = get_title( $html );
+    }
     echo <<<HTML
 <html>
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="${ht_path}/markdown-screen.css" type="text/css" media="screen" charset="utf-8">
   <link rel="stylesheet" href="${ht_path}/markdown-print.css" type="text/css" media="print" charset="utf-8">
-  <title>Viewing Markdown file ($requested_file) as HTML</title>
+  <title>$title</title>
   <script type="text/javascript" charset="utf-8">
     function hideStuff() {
       document.getElementById('TOC').style.display = 'none';
@@ -65,10 +82,12 @@ if ( file_exists( $md_source ) ) {
   </script>
 </head>
 <body onLoad="hideStuff();">
-<div class="controls" style="float: right"><a href="${requested_file}.text">View Original Text</a></div>
 
 HTML;
-    echo table_of_contents( SmartyPants( Markdown( file_get_contents( $md_source ) ) ) );
+    if ( $settings['text_version'] ) {
+      echo '<div class="controls" style="float: right"><a href="' . $requested_file . '.text">View Original Text</a></div>' . "\n";
+    }
+    echo $html;
     echo <<<HTML
   <div id="bigfoot">
     <!-- A decent amount of empty space was added so the browser can jump to anchors near the bottom of the page. -->
@@ -85,15 +104,14 @@ HTML;
   echo "<p>I couldn't find anything under that name. Sorry.</p>\n";
 }
 
-function table_of_contents($html) {
+function table_of_contents( $html ) {
   preg_match_all("/(<h([1-6]{1})[^<>]*>)([^<>]+)(<\/h[1-6]{1}>)/", $html, $matches, PREG_SET_ORDER);
   $toc = "";
   $list_index = 0;
   $indent_level = 0;
   $raw_indent_level = 0;
   $anchor_history = array();
-  foreach ($matches as $val) {
-    # html_comment( $val );
+  foreach ( $matches as $val ) {
     ++$list_index;
     $prev_indent_level = $indent_level;
     $indent_level = $val[2];
@@ -133,12 +151,16 @@ function table_of_contents($html) {
     $toc .= "</ul>\n</li>\n";
   }
   $toc .= "</ul>\n";
-  # $Settu = "";
-  # foreach ($List as $val) { // Puts together the list.
-  #   $Settu = $Settu . $val;
-  # }
   return '<p><span id="hideButton" onClick="hideStuff();">Table of Contents <span class="controls">(hide)</span></span><span class="controls" id="showButton" onClick="showStuff();">Show Table of Contents</span></p>
 <div id="TOC">' . $toc . '</div>' . "\n" . str_replace($Sections, $SectionWIDs, $html);
+}
+
+function get_title( $html ) {
+  if ( preg_match( "/<h[1-6]{1}[^<>]*>([^<>]+)<\/h[1-6]{1}>/", $html, $matches ) ) {
+    return $matches[1];
+  } else {
+    return "Untitled Markdown Document";
+  }
 }
 
 function safe_parameter( $unsafe ) {
@@ -161,5 +183,4 @@ function html_comment( $invar ) {
   print_r( $invar );
   echo "\n-->\n";
 }
-
 ?>

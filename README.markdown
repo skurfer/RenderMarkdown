@@ -2,19 +2,22 @@
 
 This script was created to convert [Markdown][md] files to usable HTML on-the-fly on various web sites I deal with. It's intended for situations where the web server will be serving out Markdown files directly. It wasn't meant to be used with blogging or CMS tools. There are usually plug-ins for that.
 
-By combining this with Apache's "Fancy Indexing" and WebDAV, you can throw together a quick and dirty documentation repository, for instance. Or maybe you just want to quickly share a document with co-workers on an existing web server without worrying about whether or not they've heard of Markdown.
+As an example, here's [this README][readme] being processed by the script.
+
+By combining this with Apache's "Fancy Indexing" and WebDAV, you can throw together a quick and dirty documentation repository, for instance. Or maybe you just want to quickly share a document with someone on an existing web server without worrying about whether or not they've heard of Markdown.
 
 ## Features ##
 
   * Generates HTML (with specific stylesheets for screen display and printing)
   * Generates a clickable table of contents (hidden by default) based on any headings found in the file
   * Provides a link that will display the original text version of the document
+  * A mostly self-explanatory INI file is included to control behavior
 
 ## Requirements ##
 
   * Apache with mod_rewrite
   * [PHP Markdown][phpmd] (or PHP Markdown Extra)
-  * [PHP SmaryPants][phpsp]
+  * [PHP SmaryPants][phpsp] (optional)
 
 ## Setup ##
 
@@ -37,6 +40,8 @@ Add rewrite rules. This can be done in the `.htaccess` file for a specific folde
     RewriteRule .+\.(markdown|mdown|md|mkd)$ /markdown/render.php
     RewriteRule .+\.(markdown|mdown|md|mkd)\.text$ /markdown/render.php [L]
 
+Edit `render.ini` to your liking.
+
 Not everyone will love the included stylesheets, but they should give you an idea which elements to define styles for. Modify them to your liking.
 
 ## Cautions ##
@@ -49,19 +54,17 @@ Although I have almost completely reworked and rewritten it, I should mention th
 
 And of course we should all thank [Gruber][df] and Michel Fortin for their work.
 
-[md]:    http://daringfireball.net/projects/markdown/
-[phpmd]: http://michelf.com/projects/php-markdown/
-[phpsp]: http://michelf.com/projects/php-smartypants/
-[toc]:   http://www.webdesignlessons.com/creating-a-table-of-contents-generator-in-php/
-[df]:    http://daringfireball.net/
+[md]:     http://daringfireball.net/projects/markdown/
+[readme]: http://projects.skurfer.com/Example.mdown
+[phpmd]:  http://michelf.com/projects/php-markdown/
+[phpsp]:  http://michelf.com/projects/php-smartypants/
+[toc]:    http://www.webdesignlessons.com/creating-a-table-of-contents-generator-in-php/
+[df]:     http://daringfireball.net/
 
 ## Future Features ##
 
 I've considered adding the following features, but I don't personally have a need for them at the moment. If even one person requests one of these, I'll probably add it.
 
-  * An INI file to control behavior
   * Specify a file to include before the main body
   * Specify a file to include after the main body
   * An option to display the source file's last modified time (top, bottom, none)
-  * An option to turn off the Table of Contents
-  * An option to turn off the link to the original text
