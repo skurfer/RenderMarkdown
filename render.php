@@ -93,10 +93,10 @@ HTML;
     }
     echo $html;
     echo <<<HTML
-  <div id="bigfoot">
-    <!-- A decent amount of empty space was added so the browser can jump to anchors near the bottom of the page. -->
-    &nbsp;
-  </div>
+<div id="bigfoot">
+  <!-- A decent amount of empty space was added so the browser can jump to anchors near the bottom of the page. -->
+  &nbsp;
+</div>
 
 HTML;
     echo <<<HTML

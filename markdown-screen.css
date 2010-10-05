@@ -1,11 +1,26 @@
-/* Default "Display Markdown" style */
-
 body, p, li, div, h1, h2, h3, h4, h5, h6, th, td {
   color: #4C4C4C;
   font-family: "Liberation Sans", "Helvetica Neue", Calibri, sans-serif;
 }
 body {
   margin: 1em 8em;
+}
+@media (max-width: 700px) {
+  body {
+    margin: 1em 1em;
+    font-size: smaller;
+  }
+}
+@media (max-device-width: 480px) {
+  body {
+    margin: 1em 1em;
+    max-width: 56em;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: xx-large;
+  }
+  pre {
+    font-size: x-large;
+  }
 }
 code {
   font-family: "Liberation Mono", Consolas, monospace;
@@ -77,5 +92,5 @@ td, th {
 }
 /* Big (Empty) Footer */
 #bigfoot {
-  height: 600px;
+  height: 40em;
 }
