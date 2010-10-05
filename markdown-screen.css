@@ -6,7 +6,7 @@ body {
   margin: 1em 8em;
 }
 @media (max-width: 700px) {
-  body {
+  body, th, td {
     margin: 1em 1em;
     font-size: smaller;
   }
