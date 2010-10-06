@@ -70,7 +70,14 @@ li p {
 li pre {
   margin-bottom: 1em;
 }
+tr {
+  border-bottom: 1px solid #EDEDED;
+}
+th {
+  background-color: #EDEDED;
+}
 td, th {
+  margin: 0px;
   padding: 0.1em 1em;
 }
 /* Table of Contents */
