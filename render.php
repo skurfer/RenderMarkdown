@@ -41,11 +41,11 @@ if ( file_exists( $md_source ) ) {
   } else {
     // Publish/Display the text as HTML
     // convert to Markdown
-    include_once( "markdown.php" );
+    require_once( "markdown.php" );
     $html = Markdown( file_get_contents( $md_source ) );
     // apply SmartyPants
     if ( $settings['smartypants'] ) {
-      include_once( "smartypants.php" );
+      require_once( "smartypants.php" );
       $html = SmartyPants( $html );
     }
     if ( $settings['toc'] ) {
