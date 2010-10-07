@@ -19,6 +19,8 @@ By combining this with Apache's "Fancy Indexing" and WebDAV, you can throw toget
   * [PHP Markdown][phpmd] (or PHP Markdown Extra)
   * [PHP SmaryPants][phpsp] (optional)
 
+This could surely be made to work with other web servers. If anyone does so, please let me know what it takes so I can include the instructions here.
+
 ## Setup ##
 
 Clone this repository. For example:
