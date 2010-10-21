@@ -158,7 +158,7 @@ function table_of_contents( $html ) {
     }
     // print this list item
     $toc .= '<li><a href="#'.$anchor.'">'. $val[3] . '</a>';
-    $Sections[$list_index] = '/' . addcslashes($val[1] . $val[3] . $val[4], '<>/') . '/'; // Original heading to be Replaced
+    $Sections[$list_index] = '/' . addcslashes($val[1] . $val[3] . $val[4], '/.*?+^$[]\\|{}-') . '/'; // Original heading to be Replaced
     $SectionWIDs[$list_index] = '<h' . $val[2] . ' id="'.$anchor.'">' . $val[3] . $val[4]; // New Heading
   }
   // close out the list
