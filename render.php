@@ -9,6 +9,7 @@
 
 $settings = parse_ini_file( "render.ini" );
 $requested = rawurldecode( $_SERVER['REQUEST_URI'] );
+// FIXME use a - or something instead of . so real files ending in `.text` will work
 $request_parts = explode( '.', $requested );
 if ( array_pop( $request_parts ) == $settings['text_extension'] ) {
   // replace the requested name with extension removed
@@ -121,7 +122,7 @@ HTML;
 }
 
 function table_of_contents( $html ) {
-  preg_match_all("/(<h([1-6]{1})[^<>]*>)([^<>]+)(<\/h[1-6]{1}>)/", $html, $matches, PREG_SET_ORDER);
+  preg_match_all("/(<h([1-6]{1})[^<>]*>)(.+)(<\/h[1-6]{1}>)/", $html, $matches, PREG_SET_ORDER);
   $toc = "";
   $list_index = 0;
   $indent_level = 0;
@@ -184,6 +185,8 @@ function safe_parameter( $unsafe ) {
   /* change a string into something that can be safely used as a parameter
   in a URL. Example: "Rob is a PHP Genius" would become "rob_is_a_php_genius" */
   
+  // remove HTML tags
+  $unsafe = strip_tags( $unsafe );
   // remove all but alphanumerics, spaces and underscores
   $lowAN = preg_replace( "/[^-a-z0-9_ ]/", "", strtolower( $unsafe ) );
   // replace spaces/underscores with underscores
