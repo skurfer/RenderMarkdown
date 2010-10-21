@@ -158,7 +158,7 @@ function table_of_contents( $html ) {
     }
     // print this list item
     $toc .= '<li><a href="#'.$anchor.'">'. $val[3] . '</a>';
-    $Sections[$list_index] = $val[1] . $val[3] . $val[4]; // Original heading to be Replaced
+    $Sections[$list_index] = '/' . addcslashes($val[1] . $val[3] . $val[4], '<>/') . '/'; // Original heading to be Replaced
     $SectionWIDs[$list_index] = '<h' . $val[2] . ' id="'.$anchor.'">' . $val[3] . $val[4]; // New Heading
   }
   // close out the list
@@ -168,7 +168,7 @@ function table_of_contents( $html ) {
   }
   $toc .= "</ul>\n";
   return '<p><span id="hideButton" onClick="hideStuff();">Table of Contents <span class="controls">(hide)</span></span><span class="controls" id="showButton" onClick="showStuff();">Show Table of Contents</span></p>
-<div id="TOC">' . $toc . '</div>' . "\n" . str_replace($Sections, $SectionWIDs, $html);
+<div id="TOC">' . $toc . '</div>' . "\n" . preg_replace($Sections, $SectionWIDs, $html, 1);
 }
 
 function get_title( $html ) {
