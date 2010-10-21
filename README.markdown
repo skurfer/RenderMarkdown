@@ -35,12 +35,12 @@ Add an alias in your Apache config:
 
     Alias /markdown/ "/var/www/support/markdown/"
 
-Add rewrite rules. This can be done in the `.htaccess` file for a specific folder, or in the global Apache config. Some common extensions are included, but you can adjust them to your needs. (You might want to process *all* text as Markdown by adding "txt". You can't currently use "text", though.)
+Add rewrite rules. This can be done in the `.htaccess` file for a specific folder, or in the global Apache config. Some common extensions are included, but you can adjust them to your needs. (You might want to process *all* text as Markdown by adding "txt".)
 
     # display Markdown as HTML by default
     RewriteEngine on
     RewriteRule .+\.(markdown|mdown|md|mkd)$ /markdown/render.php
-    RewriteRule .+\.(markdown|mdown|md|mkd)\.text$ /markdown/render.php [L]
+    RewriteRule .+\.(markdown|mdown|md|mkd)\-text$ /markdown/render.php [L]
 
 Edit `render.ini` to your liking.
 
