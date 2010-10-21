@@ -133,7 +133,7 @@ function table_of_contents( $html ) {
     $indent_level = $val[2];
     $anchor = safe_parameter( $val[3] );
     // ensure that we don't reuse an anchor
-    $anchor_index = 0;
+    $anchor_index = 1;
     $raw_anchor = $anchor;
     while ( in_array( $anchor, $anchor_history ) ) {
       $anchor_index++;
