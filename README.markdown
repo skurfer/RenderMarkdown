@@ -70,3 +70,5 @@ I've considered adding the following features, but I don't personally have a nee
   * Specify a file to include before the main body
   * Specify a file to include after the main body
   * An option to display the source file's last modified time (top, bottom, none)
+  * An option to add outline-style letters and numbers to items in the table of contents
+  * An option to add the letters/numbers from the table of contents to the actual headings in the document
