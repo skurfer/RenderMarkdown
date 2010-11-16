@@ -5,6 +5,9 @@ body, p, li, div, h1, h2, h3, h4, h5, h6, th, td {
 body {
   margin: 1em 8em;
 }
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: #8C8C8C 2px 2px 5px;
+}
 @media (max-width: 700px) {
   body, th, td {
     margin: 1em 1em;
@@ -88,6 +91,12 @@ td, th {
 }
 .controls a {
   color: #CDCDCD;
+}
+#TOC {
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
+  -o-transition: opacity 1s;
+  transition: opacity 1s;
 }
 #TOC li {
   padding: 2px 0px 0px 0px;

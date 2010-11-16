@@ -71,13 +71,19 @@ if ( file_exists( $md_source ) ) {
   <title>$title</title>
   <script type="text/javascript" charset="utf-8">
     function hideStuff() {
-      document.getElementById('TOC').style.display = 'none';
+      var toc = document.getElementById('TOC');
+      toc.style.left = '-4000px'; // not a fan of the off-left method, but IE doesn't play well with others
+      toc.style.position = 'absolute';
+      toc.style.opacity = '0';
       document.getElementById('hideButton').style.display = 'none';
       document.getElementById('showButton').style.display = 'inline';
       return true;
     }
     function showStuff() {
-      document.getElementById('TOC').style.display = 'inline';
+      var toc = document.getElementById('TOC');
+      toc.style.left = '0px';
+      toc.style.position = 'relative';
+      toc.style.opacity = '1';
       document.getElementById('hideButton').style.display = 'inline';
       document.getElementById('showButton').style.display = 'none';
       return true;
