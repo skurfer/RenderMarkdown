@@ -97,6 +97,8 @@ td, th {
   -moz-transition: opacity 1s;
   -o-transition: opacity 1s;
   transition: opacity 1s;
+  padding-bottom: 1em;
+  border-bottom: dashed 2px #CDCDCD;
 }
 #TOC li {
   padding: 2px 0px 0px 0px;
