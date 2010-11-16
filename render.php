@@ -51,9 +51,9 @@ if ( file_exists( $md_source ) ) {
     if ( $settings['toc'] ) {
       $html = table_of_contents( $html );
       if ( $settings['toc_hidden'] ) {
-        $toc_display = ' onLoad="hideStuff();"';
+        $toc_display = ' onLoad="javascript:toggleVisibility(document.getElementById(\'showhide\'), \'TOC\');"';
       } else {
-        $toc_display = ' onLoad="showStuff();"';
+        $toc_display = '';
       }
     } else {
       $toc_display = "";
@@ -70,22 +70,21 @@ if ( file_exists( $md_source ) ) {
   <link rel="stylesheet" href="${ht_path}/markdown-print.css" type="text/css" media="print" charset="utf-8">
   <title>$title</title>
   <script type="text/javascript" charset="utf-8">
-    function hideStuff() {
-      var toc = document.getElementById('TOC');
-      toc.style.left = '-4000px'; // not a fan of the off-left method, but IE doesn't play well with others
-      toc.style.position = 'absolute';
-      toc.style.opacity = '0';
-      document.getElementById('hideButton').style.display = 'none';
-      document.getElementById('showButton').style.display = 'inline';
-      return true;
-    }
-    function showStuff() {
-      var toc = document.getElementById('TOC');
-      toc.style.left = '0px';
-      toc.style.position = 'relative';
-      toc.style.opacity = '1';
-      document.getElementById('hideButton').style.display = 'inline';
-      document.getElementById('showButton').style.display = 'none';
+    function toggleVisibility(theButton, targetName) {
+      var target = document.getElementById(targetName);
+      if ( target.style.opacity == '0' ) {
+        // show
+        target.style.left = '0px';
+        target.style.position = 'relative';
+        target.style.opacity = '1';
+        theButton.innerHTML = "Hide Table of Contents";
+      } else {
+        // hide
+        target.style.left = '-4000px';
+        target.style.position = 'absolute';
+        target.style.opacity = '0';
+        theButton.innerHTML = "Show Table of Contents";
+      }
       return true;
     }
   </script>
@@ -97,6 +96,7 @@ HTML;
       $text_href = "${requested_file}-${settings['text_extension']}";
       echo '<div class="controls" style="float: right"><a href="' . $text_href . '">View Original Text</a></div>' . "\n";
     }
+    echo '<p id="showhide" class="controls" onClick="toggleVisibility(this, \'TOC\');">Hide Table of Contents</p>' . PHP_EOL;
     echo $html;
     echo <<<HTML
 <div id="bigfoot">
@@ -173,8 +173,7 @@ function table_of_contents( $html ) {
     $toc .= "</ul>\n</li>\n";
   }
   $toc .= "</ul>\n";
-  return '<p><span id="hideButton" onClick="hideStuff();">Table of Contents <span class="controls">(hide)</span></span><span class="controls" id="showButton" onClick="showStuff();">Show Table of Contents</span></p>
-<div id="TOC">' . $toc . '</div>' . "\n" . preg_replace($Sections, $SectionWIDs, $html, 1);
+  return '<div id="TOC">' . $toc . '</div>' . "\n" . preg_replace($Sections, $SectionWIDs, $html, 1);
 }
 
 function get_title( $html ) {
