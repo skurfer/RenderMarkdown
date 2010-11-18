@@ -72,7 +72,7 @@ a {
   transition: color 0.4s;
 }
 a:hover {
-  color: #A19364;
+  color: #000;
 }
 /* fix for space in list items containing <pre> */
 li p {
