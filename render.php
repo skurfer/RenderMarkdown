@@ -164,7 +164,7 @@ function table_of_contents( $html ) {
     }
     // print this list item
     $toc .= '<li><a href="#'.$anchor.'">'. $val[3] . '</a>';
-    $Sections[$list_index] = '/' . addcslashes($val[1] . $val[3] . $val[4], '/.*?+^$[]\\|{}-') . '/'; // Original heading to be Replaced
+    $Sections[$list_index] = '/' . addcslashes($val[1] . $val[3] . $val[4], '/.*?+^$[]\\|{}-()') . '/'; // Original heading to be Replaced
     $SectionWIDs[$list_index] = '<h' . $val[2] . ' id="'.$anchor.'">' . $val[3] . $val[4]; // New Heading
   }
   // close out the list
@@ -192,9 +192,11 @@ function safe_parameter( $unsafe ) {
   // remove HTML tags
   $unsafe = strip_tags( $unsafe );
   // remove all but alphanumerics, spaces and underscores
-  $lowAN = preg_replace( "/[^-a-z0-9_ ]/", "", strtolower( $unsafe ) );
+  $lowAN = preg_replace( "/[^a-z0-9_ ]/", "", strtolower( $unsafe ) );
   // replace spaces/underscores with underscores
-  $safe = preg_replace( "/[ _]+/", "_", $lowAN );
+  $clean = preg_replace( "/[ _]+/", "_", $lowAN );
+  // remove any leading or trailing underscores
+  $safe = trim( $clean, '_' );
   return $safe;
 }
 
