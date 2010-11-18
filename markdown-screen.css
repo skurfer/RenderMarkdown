@@ -31,20 +31,20 @@ code {
   font-weight: bold;
 }
 pre {
-  background: #292929;
-  border: 3px solid #B8C0C4;
+  background: #111;
+  border: 1px solid #777;
   padding: 4px 8px 4px 8px;
   margin: 0px 1em;
   max-width: 56em;
   white-space: pre-wrap;
   font-family: "Liberation Mono", Consolas, monospace;
   font-weight: normal;
-  color: #E1EBE2;
+  color: #CCC;
 }
 pre code {
   font-family: "Liberation Mono", Consolas, monospace;
   font-weight: normal;
-  color: #E1EBE2;
+  color: #CCC;
 }
 dd {
   margin-bottom: 1em;
@@ -106,8 +106,9 @@ td, th {
   -moz-transition: opacity 1s;
   -o-transition: opacity 1s;
   transition: opacity 1s;
-  padding-bottom: 1em;
-  border-bottom: dashed 2px #CDCDCD;
+  padding: 0.5em 0em;
+  border-radius: 0.8em;
+  background: #EDEDED;
 }
 #TOC li {
   font-family: "Liberation Sans", "Helvetica Neue", Calibri, sans-serif;
