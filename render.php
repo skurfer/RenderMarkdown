@@ -96,7 +96,9 @@ HTML;
       $text_href = "${requested_file}-${settings['text_extension']}";
       echo '<div class="controls" style="float: right"><a href="' . $text_href . '">View Original Text</a></div>' . "\n";
     }
-    echo '<p id="showhide" class="controls" onClick="toggleVisibility(this, \'TOC\');">Hide Table of Contents</p>' . PHP_EOL;
+    if ( $settings['toc'] ) {
+      echo '<p id="showhide" class="controls" onClick="toggleVisibility(this, \'TOC\');">Hide Table of Contents</p>' . PHP_EOL;
+    }
     echo $html;
     echo <<<HTML
 <div id="bigfoot">
