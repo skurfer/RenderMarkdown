@@ -13,6 +13,7 @@ pre {
   margin: 0px 1em;
   max-width: 56em;
   white-space: pre-wrap;
+  word-wrap: break-word;
   font-family: "Liberation Mono", Consolas, monospace;
   font-weight: normal;
   color: #474747;
