@@ -92,6 +92,9 @@ td, th {
   margin: 0px;
   padding: 0.1em 1em;
 }
+abbr {
+  border-bottom: 1px dashed #CDCDCD;
+}
 /* Table of Contents */
 .controls {
   font-family: "Liberation Sans", "Helvetica Neue", Calibri, sans-serif;
