@@ -120,12 +120,14 @@ HTML;
 <html>
 <head>
   <title>404 Not Found</title>
+  <link rel="stylesheet" href="${ht_path}/markdown-screen.css" type="text/css" media="screen" charset="utf-8">
 </head>
 <body>
 <p>I couldn't find anything under that name. Sorry.</p>
 </body>
 </html>
 HTML;
+html_comment( "Requested: $requested" );
 }
 
 function table_of_contents( $html ) {
