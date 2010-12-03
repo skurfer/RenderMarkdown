@@ -181,8 +181,8 @@ function table_of_contents( $html ) {
 }
 
 function get_title( $html ) {
-  if ( preg_match( "/<h[1-6]{1}[^<>]*>([^<>]+)<\/h[1-6]{1}>/", $html, $matches ) ) {
-    return $matches[1];
+  if ( preg_match( "/<h[1-6]{1}[^<>]*>(.+)<\/h[1-6]{1}>/", $html, $matches ) ) {
+    return strip_tags( $matches[1] );
   } else {
     return "Untitled Markdown Document";
   }
