@@ -10,7 +10,7 @@
 $settings = parse_ini_file( "render.ini" );
 $requested = rawurldecode( $_SERVER['REQUEST_URI'] );
 $request_parts = explode( '-', $requested );
-if ( array_pop( $request_parts ) == $settings['text_extension'] ) {
+if ( array_pop( $request_parts ) == $settings['text_suffix'] ) {
   // replace the requested name with extension removed
   $requested = implode( '-', $request_parts );
   $show_text = true;
@@ -34,20 +34,53 @@ $md_source = $_SERVER['DOCUMENT_ROOT'] . $requested;
 $ht_path = dirname( $_SERVER['SCRIPT_NAME'] );
 
 if ( file_exists( $md_source ) ) {
-  // if file name ended with text_extension, show the original Markdown
+  // if file name ended with text_suffix, show the original Markdown
   if ( $show_text ) {
     header( "Content-type: text/plain" );
     readfile( $md_source );
   } else {
     // Publish/Display the text as HTML
-    // convert to Markdown
+    $mdown = file_get_contents( $md_source );
+    // check for metadata?
+    $metadata = false;
+    switch ( $settings['metadata'] ) {
+      case 'remove':
+        // look for metadata and discard it
+        $result = parse_metadata( $mdown );
+        $mdown = $result['document'];
+      break;
+      case 'table':
+        // store metadata for display in an HTML table
+        // (and strip it from the original document)
+        $result = parse_metadata( $mdown );
+        $metadata = $result['metadata'];
+        $mdown = $result['document'];
+      break;
+      default:
+        // don't even look for metadata
+      break;
+    }
+    // convert Markdown to HTML
     require_once( "markdown.php" );
-    $html = Markdown( file_get_contents( $md_source ) );
+    $html = Markdown( $mdown );
     // apply SmartyPants
     if ( $settings['smartypants'] ) {
       require_once( "smartypants.php" );
       $html = SmartyPants( $html );
     }
+    // include a table of metadata
+    if ( $metadata ) {
+      $mtable = '<table id="metadata"><tbody>' . PHP_EOL;
+      foreach( $metadata as $attr => $val ) {
+        $val = implode( "<br>", $val );
+        $mtable .= "  <tr>" . PHP_EOL;
+        $mtable .= "    <td class=\"mda\">$attr</td><td class=\"mdv\">$val</td>" . PHP_EOL;
+        $mtable .= "  </tr>" . PHP_EOL;
+      }
+      $mtable .= "</tbody></table>" . PHP_EOL;
+      $html = $mtable . $html;
+    }
+    // add the Table of Contents
     if ( $settings['toc'] ) {
       $html = table_of_contents( $html );
       if ( $settings['toc_hidden'] ) {
@@ -93,7 +126,7 @@ if ( file_exists( $md_source ) ) {
 
 HTML;
     if ( $settings['text_version'] ) {
-      $text_href = "${requested_file}-${settings['text_extension']}";
+      $text_href = "${requested_file}-${settings['text_suffix']}";
       echo '<div class="controls" style="float: right"><a href="' . $text_href . '">View Original Text</a></div>' . "\n";
     }
     if ( $settings['toc'] ) {
@@ -202,6 +235,48 @@ function safe_parameter( $unsafe ) {
   // remove any leading or trailing underscores
   $safe = trim( $clean, '_' );
   return $safe;
+}
+
+function parse_metadata( $raw_doc ) {
+  /* designed to be compatible with MultiMarkdown's metadata */
+  $lines = explode( PHP_EOL, $raw_doc );
+  $metadata = $doc_lines = array();
+  // flag to halt searching for metadata
+  $parse = true;
+  foreach( $lines as $line ) {
+    if ( $parse ) {
+      if ( preg_match( "/^$/", $line ) ) {
+        // stop looking for meta-data, treat the rest as the document
+        $parse = false;
+        continue;
+      }
+      if ( preg_match( "/([\w-]+):(.*)/", $line, $parts ) ) {
+        $key = strtolower( trim( $parts[1] ) );
+        $value = trim( $parts[2] );
+        $metadata[$key] = array( $value );
+      } elseif ( preg_match( "/^\s\s\s\s(.+)/", $line, $parts ) ) {
+        // indenting 4 or more spaces continues the previous key
+        if ( ! isset( $key ) ) {
+          // the document started with an indented line
+          // assume no meta-data and stop parsing
+          $parse = false;
+          array_push( $doc_lines, $line );
+          continue;
+        }
+        $value = trim( $parts[1] );
+        array_push( $metadata[$key], $value );
+      } else {
+        // not a blank line, but not metadata either
+        // probably a document that begind with a normal line
+        array_push( $doc_lines, $line );
+      }
+    } else {
+      // add lines to the document
+      array_push( $doc_lines, $line );
+    }
+  }
+  $document = implode( PHP_EOL, $doc_lines );
+  return( array( 'metadata' => $metadata, 'document' => $document ) );
 }
 
 function html_comment( $invar ) {
