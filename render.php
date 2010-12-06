@@ -46,12 +46,14 @@ if ( file_exists( $md_source ) ) {
     switch ( $settings['metadata'] ) {
       case 'remove':
         // look for metadata and discard it
+        require_once( "mdmd.php" );
         $result = parse_metadata( $mdown );
         $mdown = $result['document'];
       break;
       case 'table':
         // store metadata for display in an HTML table
         // (and strip it from the original document)
+        require_once( "mdmd.php" );
         $result = parse_metadata( $mdown );
         $metadata = $result['metadata'];
         $mdown = $result['document'];
@@ -235,48 +237,6 @@ function safe_parameter( $unsafe ) {
   // remove any leading or trailing underscores
   $safe = trim( $clean, '_' );
   return $safe;
-}
-
-function parse_metadata( $raw_doc ) {
-  /* designed to be compatible with MultiMarkdown's metadata */
-  $lines = explode( PHP_EOL, $raw_doc );
-  $metadata = $doc_lines = array();
-  // flag to halt searching for metadata
-  $parse = true;
-  foreach( $lines as $line ) {
-    if ( $parse ) {
-      if ( preg_match( "/^$/", $line ) ) {
-        // stop looking for meta-data, treat the rest as the document
-        $parse = false;
-        continue;
-      }
-      if ( preg_match( "/([\w-]+):(.*)/", $line, $parts ) ) {
-        $key = strtolower( trim( $parts[1] ) );
-        $value = trim( $parts[2] );
-        $metadata[$key] = array( $value );
-      } elseif ( preg_match( "/^\s\s\s\s(.+)/", $line, $parts ) ) {
-        // indenting 4 or more spaces continues the previous key
-        if ( ! isset( $key ) ) {
-          // the document started with an indented line
-          // assume no meta-data and stop parsing
-          $parse = false;
-          array_push( $doc_lines, $line );
-          continue;
-        }
-        $value = trim( $parts[1] );
-        array_push( $metadata[$key], $value );
-      } else {
-        // not a blank line, but not metadata either
-        // probably a document that begind with a normal line
-        array_push( $doc_lines, $line );
-      }
-    } else {
-      // add lines to the document
-      array_push( $doc_lines, $line );
-    }
-  }
-  $document = implode( PHP_EOL, $doc_lines );
-  return( array( 'metadata' => $metadata, 'document' => $document ) );
 }
 
 function html_comment( $invar ) {
