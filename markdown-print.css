@@ -51,6 +51,26 @@ li pre {
 td, th {
   padding: 0.1em 1em;
 }
+/* Metadata Table */
+#metadata {
+  margin: 1em 0em 1em 1em;
+  font-size: large;
+  border-collapse: collapse;
+  border-top: 1px solid #EDEDED;
+  float: right;
+}
+.mda {
+  /* metadata attribute */
+  border-left: 1px solid #EDEDED;
+  border-bottom: 1px solid #EDEDED;
+  font-weight: bold;
+  vertical-align: top;
+}
+.mdv {
+  /* metadata value */
+  border-right: 1px solid #EDEDED;
+  border-bottom: 1px solid #EDEDED;
+}
 /* Don't print these things */
 .controls {
   display: none;

@@ -8,10 +8,11 @@ By combining this with Apache's "Fancy Indexing" and WebDAV, you can throw toget
 
 ## Features ##
 
-  * Generates HTML (with specific stylesheets for screen display and printing)
-  * Generates a clickable table of contents (hidden by default) based on any headings found in the file
-  * Provides a link that will display the original text version of the document
-  * A mostly self-explanatory INI file is included to control behavior
+  * Generates HTML (with specific stylesheets for screen display and printing).
+  * Generates a clickable table of contents (hidden by default) based on any headings found in the file.
+  * Provides a link that will display the original text version of the document.
+  * [MultiMarkdown metadata][mmd] can be ignored, removed, or displayed in a table. The table has an ID and it's parts have classes, so you can more easily target it in your CSS.
+  * A mostly self-explanatory INI file is included to control behavior.
 
 ## Requirements ##
 
@@ -50,6 +51,8 @@ Not everyone will love the included stylesheets, but they should give you an ide
 
 If you enable this globally for every directory on your web server and you use WebDAV, be sure to disable Apache's RewriteEngine on WebDAV folders or the Markdown files in your WebDAV volume will get sent to your file manager as HTML as well.
 
+`mod_userdir` locations like `http://server.tld/~user/Foo.mdown` don't currently work. (It's difficult to determine the filesystem path using only the URL in such cases.)
+
 ## Credit ##
 
 Although I have almost completely reworked and rewritten it, I should mention that the basis for generating the Table of Contents came from [this article][toc] on WebDesignLessons.com.
@@ -57,6 +60,7 @@ Although I have almost completely reworked and rewritten it, I should mention th
 And of course we should all thank [Gruber][df] and Michel Fortin for their work.
 
 [md]:     http://daringfireball.net/projects/markdown/
+[mmd]:    https://github.com/fletcher/MultiMarkdown/wiki/MultiMarkdown-Syntax-Guide
 [readme]: http://projects.skurfer.com/Example.mdown
 [phpmd]:  http://michelf.com/projects/php-markdown/
 [phpsp]:  http://michelf.com/projects/php-smartypants/
@@ -70,5 +74,5 @@ I've considered adding the following features, but I don't personally have a nee
   * Specify a file to include before the main body
   * Specify a file to include after the main body
   * An option to display the source file's last modified time (top, bottom, none)
-  * An option to add outline-style letters and numbers to items in the table of contents
+  * An option to add outline-style letters and numbers to items in the table of contents (or MediaWiki style numbering)
   * An option to add the letters/numbers from the table of contents to the actual headings in the document
