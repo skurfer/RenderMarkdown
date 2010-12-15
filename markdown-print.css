@@ -52,7 +52,7 @@ td, th {
   padding: 0.1em 1em;
 }
 /* Metadata Table */
-#metadata {
+table#metadata {
   margin: 1em 0em 1em 1em;
   border-collapse: collapse;
   border-top: 1px solid #EDEDED;

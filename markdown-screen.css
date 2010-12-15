@@ -121,7 +121,7 @@ abbr {
   padding: 0px 0px 0px 1.5em;
 }
 /* Metadata Table */
-#metadata {
+table#metadata {
   margin: 1em -1em 1em 1em;
   border-collapse: collapse;
   float: right;
