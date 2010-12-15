@@ -11,8 +11,19 @@ By combining this with Apache's "Fancy Indexing" and WebDAV, you can throw toget
   * Generates HTML (with specific stylesheets for screen display and printing).
   * Generates a clickable table of contents (hidden by default) based on any headings found in the file.
   * Provides a link that will display the original text version of the document.
-  * [MultiMarkdown metadata][mmd] can be ignored, removed, or displayed in a table. The table has an ID and it's parts have classes, so you can more easily target it in your CSS.
+  * Metadata support (see below)
   * A mostly self-explanatory INI file is included to control behavior.
+
+### Metadata ###
+
+[MultiMarkdown metadata][mmd] can be ignored, removed, or displayed in a table. The table has an ID and it's parts have classes, so you can more easily target it in your CSS.
+
+If you choose to display metadata in a table, you can optionally have certain values in the table turned into links. For instance, say you have all your documents indexed somehow by a metadata attribute called "tags" and your site will list matching documents at a URL like "http://www.mysite.tld/tags/foo". To make the displayed tags link to the appropriate address, you could define this in the INI:
+
+    link_attrs[] = "tags"
+    link_pattern = "http://www.mysite.tld/%k/%v"
+
+`link_attrs` is an array of possible attribute names, so be sure to include the empty trailing brackets.
 
 ## Requirements ##
 
@@ -45,7 +56,7 @@ Add rewrite rules. This can be done in the `.htaccess` file for a specific folde
 
 Edit `render.ini` to your liking.
 
-Not everyone will love the included stylesheets, but they should give you an idea which elements to define styles for. Modify them to your liking.
+Not everyone will love the included stylesheets, but they should give you an idea which elements to define styles for.
 
 ## Cautions ##
 

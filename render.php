@@ -74,6 +74,19 @@ if ( file_exists( $md_source ) ) {
     if ( $metadata ) {
       $mtable = '<table id="metadata"><tbody>' . PHP_EOL;
       foreach( $metadata as $attr => $val ) {
+        if ( $settings['link_pattern'] && in_array( $attr, $settings['link_attrs'] ) ) {
+          // turn value(s) into a link
+          $newval = array();
+          foreach( $val as $target ) {
+            $link = preg_replace(
+              array( '/%k/', '/%v/' ),
+              array( $attr, $target ),
+              $settings['link_pattern']
+            );
+            array_push( $newval, "<a href=\"$link\">$target</a>" );
+          }
+          $val = $newval;
+        }
         $val = implode( "<br>", $val );
         $mtable .= "  <tr>" . PHP_EOL;
         $mtable .= "    <td class=\"mda\">$attr</td><td class=\"mdv\">$val</td>" . PHP_EOL;
