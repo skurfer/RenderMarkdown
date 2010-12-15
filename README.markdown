@@ -54,7 +54,7 @@ Add rewrite rules. This can be done in the `.htaccess` file for a specific folde
     RewriteRule .+\.(markdown|mdown|md|mkd)$ /markdown/render.php
     RewriteRule .+\.(markdown|mdown|md|mkd)\-text$ /markdown/render.php [L]
 
-Edit `render.ini` to your liking.
+Copy `render.ini.default` to `render.ini` and edit to your liking.
 
 Not everyone will love the included stylesheets, but they should give you an idea which elements to define styles for.
 
