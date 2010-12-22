@@ -9,6 +9,19 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Liberation Sans", "Helvetica Neue", Calibri, sans-serif;
   text-shadow: rgba(35, 35, 35, 0.5) 2px 2px 5px;
 }
+.permalink {
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  opacity: 0;
+  margin: 0 0 0 0.25em;
+}
+h1:hover .permalink, h2:hover .permalink,
+h3:hover .permalink, h4:hover .permalink,
+h5:hover .permalink, h6:hover .permalink {
+  opacity: 1;
+}
 @media (max-width: 700px) {
   body, th, td {
     margin: 1em 1em;

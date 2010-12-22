@@ -9,6 +9,12 @@ text_version = 1
 text_suffix = "text"
 ; use the first heading found as the document's title
 title_from_heading = 1
+; append a link to every heading using this text
+; set to "" for no permalinks
+; pilcrow       &#x00B6;
+; infinity      &#x221E;
+; pointing hand &#x261A;
+permalink = "&#x00B6;"
 ; use SmartyPants
 smartypants = 1
 ; how to handle metadata

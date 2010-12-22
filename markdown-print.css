@@ -86,3 +86,6 @@ table#metadata {
 #bigfoot {
   display: none;
 }
+.permalink {
+  display: none;
+}

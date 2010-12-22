@@ -95,6 +95,11 @@ if ( file_exists( $md_source ) ) {
       $mtable .= "</tbody></table>" . PHP_EOL;
       $html = $mtable . $html;
     }
+    // window title
+    $title = "Viewing Markdown file ($requested_file) as HTML";
+    if ( $settings['title_from_heading'] ) {
+      $title = get_title( $html );
+    }
     // add the Table of Contents
     if ( $settings['toc'] ) {
       $html = table_of_contents( $html );
@@ -105,10 +110,6 @@ if ( file_exists( $md_source ) ) {
       }
     } else {
       $toc_display = "";
-    }
-    $title = "Viewing Markdown file ($requested_file) as HTML";
-    if ( $settings['title_from_heading'] ) {
-      $title = get_title( $html );
     }
     echo <<<HTML
 <html>
@@ -179,6 +180,7 @@ html_comment( "Requested: $requested" );
 }
 
 function table_of_contents( $html ) {
+  global $settings;
   preg_match_all("/(<h([1-6]{1})[^<>]*>)(.+)(<\/h[1-6]{1}>)/", $html, $matches, PREG_SET_ORDER);
   $toc = "";
   $list_index = 0;
@@ -214,10 +216,16 @@ function table_of_contents( $html ) {
       // end the list item too
       $toc .= "</li>\n";
     }
+    // add permalink?
+    if ( $settings['permalink'] != "" ) {
+      $pl = ' <a href="#'.$anchor.'" class="permalink">' . $settings['permalink'] . '</a>';
+    } else {
+      $pl = "";
+    }
     // print this list item
     $toc .= '<li><a href="#'.$anchor.'">'. $val[3] . '</a>';
     $Sections[$list_index] = '/' . addcslashes($val[1] . $val[3] . $val[4], '/.*?+^$[]\\|{}-()') . '/'; // Original heading to be Replaced
-    $SectionWIDs[$list_index] = '<h' . $val[2] . ' id="'.$anchor.'">' . $val[3] . $val[4]; // New Heading
+    $SectionWIDs[$list_index] = '<h' . $val[2] . ' id="'.$anchor.'">' . $val[3] . $pl . $val[4]; // New Heading
   }
   // close out the list
   $toc .= "</li>\n";
