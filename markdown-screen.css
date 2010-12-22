@@ -15,12 +15,14 @@ h1, h2, h3, h4, h5, h6 {
   -o-transition: opacity 0.5s;
   transition: opacity 0.5s;
   opacity: 0;
+  visibility: hidden;
   margin: 0 0 0 0.25em;
 }
 h1:hover .permalink, h2:hover .permalink,
 h3:hover .permalink, h4:hover .permalink,
 h5:hover .permalink, h6:hover .permalink {
   opacity: 1;
+  visibility: visible;
 }
 @media (max-width: 700px) {
   body, th, td {
