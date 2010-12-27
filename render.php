@@ -218,7 +218,7 @@ function table_of_contents( $html ) {
     }
     // add permalink?
     if ( $settings['permalink'] != "" ) {
-      $pl = ' <a href="#'.$anchor.'" class="permalink">' . $settings['permalink'] . '</a>';
+      $pl = ' <a href="#'.$anchor.'" class="permalink" title="link to this section">' . $settings['permalink'] . '</a>';
     } else {
       $pl = "";
     }
