@@ -44,23 +44,25 @@ h5:hover .permalink, h6:hover .permalink {
 code {
   font-family: "Liberation Mono", Consolas, monospace;
   font-weight: bold;
+  font-size: small;
 }
 pre {
-  background: #111;
-  border: 1px solid #777;
-  padding: 4px 8px 4px 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px inset;
+  -moz-box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px inset;
+  -o-box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px inset;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px inset;
+  background-color: #EEE;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  padding: 0.4em;
   margin: 0px 1em;
   max-width: 56em;
   white-space: pre-wrap;
   word-wrap: break-word;
-  font-family: "Liberation Mono", Consolas, monospace;
   font-weight: normal;
-  color: #CCC;
 }
 pre code {
-  font-family: "Liberation Mono", Consolas, monospace;
   font-weight: normal;
-  color: #CCC;
 }
 dd {
   margin-bottom: 1em;
