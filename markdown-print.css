@@ -41,6 +41,10 @@ a {
   text-decoration: none;
   color: #600000;
 }
+a:after {
+   content: " (" attr(href) ") ";
+   font-size: 90%;
+}
 /* fix for space in list items containing <pre> */
 li p {
   margin-top: 0px;
