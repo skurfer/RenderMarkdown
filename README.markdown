@@ -29,7 +29,7 @@ If you choose to display metadata in a table, you can optionally have certain va
 
   * Apache with mod_rewrite
   * [PHP Markdown][phpmd] (or PHP Markdown Extra)
-  * [PHP SmaryPants][phpsp] (optional)
+  * [PHP SmartyPants][phpsp] (optional)
 
 This could surely be made to work with other web servers. If anyone does so, please let me know what it takes so I can include the instructions here.
 
@@ -41,7 +41,7 @@ Clone this repository. For example:
     cd /var/www/support
     git clone git://github.com/skurfer/RenderMarkdown.git markdown
 
-Download [PHP Markdown][phpmd] (or PHP Markdown Extra) and [PHP SmaryPants][phpsp] from Michel Fortin. Put `markdown.php` and `smartypants.php` somewhere in PHP's include path (or in the same directory as `render.php`).
+Download [PHP Markdown][phpmd] (or PHP Markdown Extra) and [PHP SmartyPants][phpsp] from Michel Fortin. Put `markdown.php` and `smartypants.php` somewhere in PHP's include path (or in the same directory as `render.php`).
 
 Add an alias in your Apache config:
 
