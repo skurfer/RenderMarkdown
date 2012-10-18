@@ -13,6 +13,7 @@ By combining this with Apache's "Fancy Indexing" and WebDAV, you can throw toget
   * Provides a link that will display the original text version of the document.
   * Metadata support (see below)
   * A mostly self-explanatory INI file is included to control behavior.
+  * Syntax highlighting in `<pre>` blocks using Pygments (Python only)
 
 ### Metadata ###
 
@@ -27,11 +28,17 @@ If you choose to display metadata in a table, you can optionally have certain va
 
 ## Requirements ##
 
-  * Apache with mod_rewrite
+  * Apache with mod_rewrite (This could surely be made to work with other web servers. If anyone does so, please let me know what it takes so I can include the instructions here.)
+
+### PHP ###
+
   * [PHP Markdown][phpmd] (or PHP Markdown Extra)
   * [PHP SmartyPants][phpsp] (optional)
 
-This could surely be made to work with other web servers. If anyone does so, please let me know what it takes so I can include the instructions here.
+### Python ###
+
+  * [Python-Markdown][pymd]
+  * [Pygments][pyg]
 
 ## Setup ##
 
@@ -40,6 +47,12 @@ Clone this repository. For example:
     mkdir /var/www/support
     cd /var/www/support
     git clone git://github.com/skurfer/RenderMarkdown.git markdown
+
+Copy `render.ini.default` to `render.ini` and edit to your liking.
+
+Not everyone will love the included stylesheets, but they should give you an idea which elements to define styles for.
+
+### PHP ###
 
 Download [PHP Markdown][phpmd] (or PHP Markdown Extra) and [PHP SmartyPants][phpsp] from Michel Fortin. Put `markdown.php` and `smartypants.php` somewhere in PHP's include path (or in the same directory as `render.php`).
 
@@ -54,9 +67,24 @@ Add rewrite rules. This can be done in the `.htaccess` file for a specific folde
     RewriteRule .+\.(markdown|mdown|md|mkd)$ /markdown/render.php
     RewriteRule .+\.(markdown|mdown|md|mkd)\-text$ /markdown/render.php [L]
 
-Copy `render.ini.default` to `render.ini` and edit to your liking.
+### Python ###
 
-Not everyone will love the included stylesheets, but they should give you an idea which elements to define styles for.
+Install Python-Markdown and Pygments:
+
+    pip install markdown pygments
+
+Configure `mod_wsgi` for Apache:
+
+    <IfModule wsgi_module>
+        WSGIScriptAlias /markdown /var/www/support/markdown/render_markdown.py
+    </IfModule>
+
+Add rewrite rules. This can be done in the `.htaccess` file for a specific folder, or in the global Apache config. Some common extensions are included, but you can adjust them to your needs. (You might want to process *all* text as Markdown by adding "txt".)
+
+    # display Markdown as HTML by default
+    RewriteEngine on
+    RewriteRule .+\.(markdown|mdown|md|mkd)$ /markdown
+    RewriteRule .+\.(markdown|mdown|md|mkd)\-text$ /markdown [L]
 
 ## Cautions ##
 
@@ -66,24 +94,16 @@ If you enable this globally for every directory on your web server and you use W
 
 ## Credit ##
 
-Although I have almost completely reworked and rewritten it, I should mention that the basis for generating the Table of Contents came from [this article][toc] on WebDesignLessons.com.
+Although I have almost completely reworked and rewritten it, I should mention that the basis for generating the Table of Contents in the PHP version came from [this article][toc] on WebDesignLessons.com.
 
-And of course we should all thank [Gruber][df] and Michel Fortin for their work.
+And of course we should all thank [Gruber][df], Waylan Limberg, and Michel Fortin for their work.
 
 [md]:     http://daringfireball.net/projects/markdown/
 [mmd]:    https://github.com/fletcher/MultiMarkdown/wiki/MultiMarkdown-Syntax-Guide
 [readme]: http://projects.skurfer.com/Example.mdown
 [phpmd]:  http://michelf.com/projects/php-markdown/
 [phpsp]:  http://michelf.com/projects/php-smartypants/
+[pymd]:   http://packages.python.org/Markdown/
+[pyg]:    http://pygments.org/
 [toc]:    http://www.webdesignlessons.com/creating-a-table-of-contents-generator-in-php/
 [df]:     http://daringfireball.net/
-
-## Future Features ##
-
-I've considered adding the following features, but I don't personally have a need for them at the moment. If even one person requests one of these, I'll probably add it.
-
-  * Specify a file to include before the main body
-  * Specify a file to include after the main body
-  * An option to display the source file's last modified time (top, bottom, none)
-  * An option to add outline-style letters and numbers to items in the table of contents (or MediaWiki style numbering)
-  * An option to add the letters/numbers from the table of contents to the actual headings in the document
