@@ -48,9 +48,7 @@ Clone this repository. For example:
     cd /var/www/support
     git clone git://github.com/skurfer/RenderMarkdown.git markdown
 
-Copy `render.ini.default` to `render.ini` and edit to your liking.
-
-Not everyone will love the included stylesheets, but they should give you an idea which elements to define styles for.
+Copy all the `.default` files and edit to your liking.
 
 ### PHP ###
 
