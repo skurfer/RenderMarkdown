@@ -9,14 +9,6 @@ text_version = 1
 text_suffix = "text"
 ; use the first heading found as the document's title
 title_from_heading = 1
-; append a link to every heading using this text
-; set to "" for no permalinks
-; pilcrow       &#x00B6;
-; infinity      &#x221E;
-; pointing hand &#x261A;
-permalink = "&#x00B6;"
-; use SmartyPants
-smartypants = 1
 ; how to handle metadata
 ; "ignore": Just send the text to the Markdown parser as is, with or without metadata.
 ; "remove": Look for metadata and strip it from the document before Markdown processing.
@@ -24,7 +16,6 @@ smartypants = 1
 metadata = "table"
 ; links from metadata
 ; If the metadata contains an attribute listed below, you can have the values turned into links using link_pattern.
-link_attrs[] = "tag"
 link_attrs[] = "tags"
 link_attrs[] = "author"
 ; "%k" will be replaced with the name of the attribute and %v with the value. It can be an absolute or relative address.
@@ -33,3 +24,14 @@ link_attrs[] = "author"
 ;  link_pattern = "http://www.mysite.tld/search/?q=%k:%v" ; search pattern
 ;  link_pattern = "/%k/%v" ; relative address
 ;  link_pattern = "/tags/%v" ; just use the value, ignore the attribute name
+link_pattern = "/search/?q=%k:%v"
+; append a link to every heading using this text (PHP only)
+; set to "" for no permalinks
+; pilcrow       &#x00B6;
+; infinity      &#x221E;
+; pointing hand &#x261A;
+permalink = "&#x00B6;"
+; use SmartyPants (PHP only)
+smartypants = 1
+; stylesheet for Codehilite extension (Python only)
+codehilite_style = "/styles/pygments/default.css"
