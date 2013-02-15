@@ -168,9 +168,7 @@ def application(environ, start_response):
         heading = first_heading(source_text)
         if heading is not None:
             title = heading
-    ## get what would be in SCRIPT_NAME under PHP
-    script_name = environ['SCRIPT_FILENAME'].split(environ['DOCUMENT_ROOT'])[1]
-    ht_path = unicode(os.path.dirname(script_name), 'utf-8')
+    ht_path = "/markdown"
     codehilite_style = unicode(settings.get('codehilite_style', ''), 'utf-8')
     html = u'''<html>
 <head>
