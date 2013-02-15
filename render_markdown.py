@@ -75,12 +75,12 @@ def application(environ, start_response):
                 settings[s] = v
     
     ## get the source file path
-    reqested = unquote(environ['REQUEST_URI'])
-    rparts = reqested.split('-')
+    requested = unquote(environ['REQUEST_URI'])
+    rparts = requested.split('-')
     if rparts[-1] == settings.get('text_suffix', 'text'):
-        reqested = rparts[0]
+        requested = '-'.join(rparts[:-1])
         show_text = True
-    source_file = environ['DOCUMENT_ROOT'] + reqested
+    source_file = environ['DOCUMENT_ROOT'] + requested
     source_text = unicode(open(source_file).read(), 'utf-8')
     
     ## display original text?
@@ -149,7 +149,7 @@ def application(environ, start_response):
     
     text_link = ''
     if text_version:
-        text_href = '%s-%s' % (reqested, text_suffix)
+        text_href = '%s-%s' % (requested, text_suffix)
         text_div = '<div class="controls" style="float: right"><a href="%s">View Original Text</a></div>' % text_href
         source_text = unicode(text_div, 'utf-8') + source_text
     
@@ -160,7 +160,7 @@ def application(environ, start_response):
     ## convert text to HTML
     mdown = md.convert(source_text)
     
-    title = "Viewing Markdown file (%s) as HTML" % os.path.basename(reqested)
+    title = "Viewing Markdown file (%s) as HTML" % os.path.basename(requested)
     if meta_title is not None:
         ## a title in the metadata takes precedence
         title = meta_title
