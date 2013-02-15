@@ -40,8 +40,8 @@ def first_heading(source_text):
     """Scan through the text and return the first heading."""
     lines = source_text.split('\n')
     for l in lines:
-        if l.startswith('#'):
-            return str(l.strip('# '))
+        if l.startswith(u'#'):
+            return l.strip(u'# ')
     return None
 
 def application(environ, start_response):
@@ -134,10 +134,10 @@ def application(environ, start_response):
 </tr>
 ''' % (name, '<br>'.join(values))
                 meta_html_table = meta_html_table + table_row
-            meta_html_table = unicode(meta_html_table + '</table>\n', 'utf-8')
+            meta_html_table = meta_html_table + '</table>\n'
             source_text = meta_html_table + source_text
     
-    toc_display = ''
+    toc_display = u''
     if include_toc:
         ## make sure the required extension is loaded
         md_ext.append('toc')
@@ -145,7 +145,7 @@ def application(environ, start_response):
         source_text = u'<p id="showhide" class="controls" onClick="toggleVisibility(this, \'TOC\');">Hide Table of Contents</p>\n\n[TOC]\n\n' + source_text
         ## set initial state for table of contents
         if toc_hidden:
-            toc_display = ' onLoad="javascript:toggleVisibility(document.getElementById(\'showhide\'), \'TOC\');"'
+            toc_display = u' onLoad="javascript:toggleVisibility(document.getElementById(\'showhide\'), \'TOC\');"'
     
     text_link = ''
     if text_version:
@@ -158,7 +158,7 @@ def application(environ, start_response):
     md = markdown.Markdown(extensions=md_ext,
                            output_format='html4')
     ## convert text to HTML
-    mdown = md.convert(source_text).encode('utf-8')
+    mdown = md.convert(source_text)
     
     title = "Viewing Markdown file (%s) as HTML" % os.path.basename(reqested)
     if meta_title is not None:
@@ -170,9 +170,9 @@ def application(environ, start_response):
             title = heading
     ## get what would be in SCRIPT_NAME under PHP
     script_name = environ['SCRIPT_FILENAME'].split(environ['DOCUMENT_ROOT'])[1]
-    ht_path = os.path.dirname(script_name)
-    codehilite_style = settings.get('codehilite_style', '')
-    html = '''<html>
+    ht_path = unicode(os.path.dirname(script_name), 'utf-8')
+    codehilite_style = unicode(settings.get('codehilite_style', ''), 'utf-8')
+    html = u'''<html>
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="%s/markdown-screen.css" type="text/css" media="screen" charset="utf-8">
@@ -207,7 +207,7 @@ def application(environ, start_response):
 ''' % (ht_path, codehilite_style, ht_path, title, toc_display, mdown)
     
     ## use an ID instead of a class for the table of contents
-    html = html.replace('div class="toc"', 'div id="TOC"')
+    html = html.replace(u'div class="toc"', 'div id="TOC"')
     
     # lines = ['* * * WEB SERVER ENVIRONMENT * * *']
     # for v in environ:
@@ -221,5 +221,5 @@ def application(environ, start_response):
     ]
     start_response(status, response_headers)
     
-    return [html]
+    return [html.encode('utf-8')]
 
