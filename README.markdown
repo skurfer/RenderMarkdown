@@ -90,12 +90,6 @@ If you enable this globally for every directory on your web server and you use W
 
 `mod_userdir` locations like `http://server.tld/~user/Foo.mdown` don't currently work. (It's difficult to determine the filesystem path using only the URL in such cases.)
 
-## Credit ##
-
-Although I have almost completely reworked and rewritten it, I should mention that the basis for generating the Table of Contents in the PHP version came from [this article][toc] on WebDesignLessons.com.
-
-And of course we should all thank [Gruber][df], Waylan Limberg, and Michel Fortin for their work.
-
 [md]:     http://daringfireball.net/projects/markdown/
 [mmd]:    https://github.com/fletcher/MultiMarkdown/wiki/MultiMarkdown-Syntax-Guide
 [readme]: http://projects.skurfer.com/Example.mdown
@@ -103,5 +97,3 @@ And of course we should all thank [Gruber][df], Waylan Limberg, and Michel Forti
 [phpsp]:  http://michelf.com/projects/php-smartypants/
 [pymd]:   http://packages.python.org/Markdown/
 [pyg]:    http://pygments.org/
-[toc]:    http://www.webdesignlessons.com/creating-a-table-of-contents-generator-in-php/
-[df]:     http://daringfireball.net/
