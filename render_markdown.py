@@ -75,7 +75,7 @@ def application(environ, start_response):
                 settings[s] = v
     
     ## get the source file path
-    requested = unquote(environ['REQUEST_URI'])
+    requested = unquote(environ['PATH_INFO'])
     rparts = requested.split('-')
     if rparts[-1] == settings.get('text_suffix', 'text'):
         requested = '-'.join(rparts[:-1])
